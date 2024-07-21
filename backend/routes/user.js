@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const zod=require("zod");
-const {User}=require("../db");
+const {User, Account}=require("../db");
 const jwt=require("jsonwebtoken");
 const JWT_SECRET=require("../config");
 const { authMiddleware } = require("../middleware");
@@ -29,6 +29,12 @@ router.post('/signup',async(req,res)=>{
     }
     const dbUser=new User(body);
     await dbUser.save();
+    
+    const dbAccount=new Account({
+        userId:dbUser._id,
+        balance:1+ Math.random()*10000
+    });
+    await dbAccount.save();
 
     const token=jwt.sign({
         usedId:dbUser._id
@@ -92,6 +98,29 @@ router.put('/',authMiddleware,async(req,res)=>{
             msg:"user updated succesfully"
         })
     }
+});
+
+router.get('/bulk',async (req,res)=>{
+    const filter=req.query.filter || "";
+    const users=await User.find({
+        $or:[{
+            firstName:{$regex:filter,$options:"$i"}
+        },
+        {
+            lastName:{$regex:filter,$options:"$i"}
+        }
+    ]
+    });
+    res.json({
+        user:users.map((user)=>(
+            {
+                username:user.username,
+                firstName:user.firstName,
+                lastName:user.lastName,
+                _id:user._id
+            }
+        ))
+    })
 })
 
 module.exports=router;
