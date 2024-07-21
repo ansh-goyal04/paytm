@@ -6,6 +6,7 @@ const jwt=require("jsonwebtoken");
 const JWT_SECRET=require("../config");
 const { authMiddleware } = require("../middleware");
 
+
 const signupSchema=zod.object({
     username:zod.string().email(),
     password:zod.string(),
@@ -93,7 +94,6 @@ router.put('/',authMiddleware,async(req,res)=>{
     }
     if(req.userId){
         const user=await User.findByIdAndUpdate(req.userId,req.body);
-        console.log(user);
         return res.json({
             msg:"user updated succesfully"
         })
