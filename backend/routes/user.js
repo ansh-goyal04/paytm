@@ -104,10 +104,10 @@ router.get('/bulk',async (req,res)=>{
     const filter=req.query.filter || "";
     const users=await User.find({
         $or:[{
-            firstName:{$regex:filter,$options:"$i"}
+            firstName:{$regex:filter,$options:"i"}
         },
         {
-            lastName:{$regex:filter,$options:"$i"}
+            lastName:{$regex:filter,$options:"i"}
         }
     ]
     });
@@ -123,4 +123,18 @@ router.get('/bulk',async (req,res)=>{
     })
 })
 
+router.get('/existingUser',async(req,res)=>{
+    const token=localStorage.getItem("token");
+    console.log("ok");
+    try{
+        const decoded=jwt.verify(token,JWT_SECRET);
+        // res.send(decoded.userId);
+        const user=await Account.findOne({userId:decoded.userId})
+        console.log(user);
+        res.send(user);
+    }
+    catch(err){
+        console.log(err);
+    }
+})
 module.exports=router;

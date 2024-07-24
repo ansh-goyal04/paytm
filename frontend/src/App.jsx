@@ -4,8 +4,11 @@ import SignIn from "./pages/signIn";
 import SignUp from "./pages/signUp";
 import Dashboard from "./pages/dashboard";
 import SendMoney from "./pages/SendMoney";
+import { useNavigate } from "react-router-dom"
 
 function App() {
+  // const navigate = useNavigate();
+  // navigate('/signup');
 
   return <>
   <BrowserRouter>
