@@ -137,4 +137,11 @@ router.get('/existingUser',async(req,res)=>{
         console.log(err);
     }
 })
+
+router.get('/signout',authMiddleware,async(req,res)=>{
+    return res.json({
+        loggedOut:req.userId,
+        msg:"logged out successfully"
+    })
+})
 module.exports=router;

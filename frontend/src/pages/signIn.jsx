@@ -26,14 +26,14 @@ export default function Signin  ()  {
             setPassword(e.target.value)
         }} />
         <div className="pt-4">
-          <Button label={"Sign in"} onClick={async () => {
+          <Button onClick={async () => {
             const response = await axios.post("http://localhost:3000/api/v1/user/signin", {
               username,
               password
             });
             localStorage.setItem("token", response.data.token)
             navigate("/dashboard")
-          } }/>
+          } } label={"Sign in"} />
         </div>
         <BottomWarning label={"Don't have an account?"} buttonText={"Sign up"} to={"/signup"} />
       </div>
