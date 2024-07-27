@@ -17,7 +17,6 @@ export default function Dashboard(){
         }
         func();
     },[]);
-    
     return <div>
     <Appbar onClick={async()=>{
         const response=await axios.get("http://localhost:3000/api/v1/user/signout");
