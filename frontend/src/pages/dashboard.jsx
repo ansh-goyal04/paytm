@@ -11,12 +11,16 @@ export default function Dashboard(){
     const [balance,setBalance]=useState(0);
     useEffect(()=>{
         async function func(){
-            const response=await axios.get("http:localhost:3000/api/v1/account/balance");
+            const response=await axios.get("http://localhost:3000/api/v1/account/balance",{
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            });
             console.log(response);
-            setBalance(response.data);
+            setBalance(response.data.balance);
         }
         func();
-    },[]);
+    },[balance]);
     return <div>
     <Appbar onClick={async()=>{
         const response=await axios.get("http://localhost:3000/api/v1/user/signout");
