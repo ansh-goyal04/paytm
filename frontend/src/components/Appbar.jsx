@@ -1,13 +1,13 @@
 import Button from "./Button";
 
-export default function Appbar({onClick,label}){
+export default function Appbar({onClick,label,user}){
     return <div className="shadow h-14 flex justify-between">
         <div className="flex flex-col justify-center h-full ml-4">
             PayTM App
         </div>
         <div className="flex pr-5">
             <div className="flex flex-col justify-center h-full  pr-3" >
-                Hello
+                Hello {user}
             </div>
             <div className="flex flex-col justify-center pr-3 ">
                 {/* <button >Sign out</button> */}
@@ -15,7 +15,7 @@ export default function Appbar({onClick,label}){
             </div>
             <div className="rounded-full h-10 w-10 bg-slate-200 flex justify-center mt-2 mr-2">
                 <div className="flex flex-col justify-center h-full text-xl">
-                    U
+                    {user.toString().toUpperCase()[0]}
                 </div>
             </div>
             

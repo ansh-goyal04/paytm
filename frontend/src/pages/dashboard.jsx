@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom"
 
 export default function Dashboard(){
     const navigate=useNavigate();
-    // const [loggedin,setLoggedin]=useState(true);
     const [balance,setBalance]=useState(0);
+    const [user,setUser]=useState("");
     useEffect(()=>{
         async function func(){
             const response=await axios.get("http://localhost:3000/api/v1/account/balance",{
@@ -16,8 +16,9 @@ export default function Dashboard(){
                     Authorization: "Bearer " + localStorage.getItem("token")
                 }
             });
-            console.log(response);
             setBalance(response.data.balance);
+            setUser(response.data.user.firstName);
+
         }
         func();
     },[balance]);
@@ -26,7 +27,7 @@ export default function Dashboard(){
         const response=await axios.get("http://localhost:3000/api/v1/user/signout");
         localStorage.removeItem("token");
         navigate("/signin");
-    }} label={"signout"}/>
+    }} label={"signout"} user={user}/>
         
     <div className="m-8">
         <Balance value={balance} />
